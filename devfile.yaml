@@ -31,20 +31,33 @@ components:
       volumeMounts:
         - name: maven-artifacts
           path: /home/user/.m2
-      cpuLimit: "2"
-      memoryLimit: 4Gi
+      cpuLimit: '2'
+      memoryLimit: '4Gi'
+
   - name: postgres
     container:
-      image: postgres:latest
+      image: "registry.redhat.io/rhel9/postgresql-16:latest"
+      memoryLimit: "256M"
       env:
-        - name: POSTGRES_DB
+        - name: POSTGRESQL_DATABASE
           value: bookstore_db
-        - name: POSTGRES_USER
+        - name: POSTGRESQL_USER
           value: postgres
-        - name: POSTGRES_PASSWORD
+        - name: POSTGRESQL_PASSWORD
           value: admin
-      cpuLimit: "1"
-      memoryLimit: 2Gi
+      volumeMounts:
+        - name: pgdata
+          path: /var/lib/pgsql/data
+      endpoints:
+        - name: postgres
+          targetPort: 5432
+          exposure: internal
+
   - name: maven-artifacts
     volume:
       size: 2Gi
+
+  - name: pgdata
+    volume:
+      size: 2Gi
+
