@@ -27,4 +27,11 @@ mvn archetype:generate \
     -DinteractiveMode=false
 ```
 
-3) See the git log ...
+3) Remove the following files from the base project since we are not going to use them
+```bash
+cd bookstore
+rm src/main/java/org/wildfly/examples/BookStoreService.java
+rm src/main/java/org/wildfly/examples/BookStoreEndpoint.java
+rm src/test/java/org/wildfly/examples/BookStoreApplicationIT.java
+rm src/test/java/org/wildfly/examples/BookStoreServiceIT.java
+```
