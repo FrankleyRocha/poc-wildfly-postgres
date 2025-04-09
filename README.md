@@ -70,7 +70,19 @@ rm src/test/java/org/wildfly/examples/BookStoreServiceIT.java
 <debugPort>8787</debugPort>
 ```
 
-* its will be like this
+6) Instruct Wildfly Glow to discover automatically the required Galleon Layers for our application
+
+* The discover-provisioning-info configuration tells the plugin to discover the required layers by inspecting our application code. By using the postgresql:default addon, we are specifying we want to use a PostgreSQL database, and we want to configure it as the default datasource for the server.
+
+```xml
+<discover-provisioning-info>
+    <addOns>
+        <addOn>postgresql:default</addOn>
+    </addOns>
+</discover-provisioning-info>
+```
+
+* Your `wildfly-maven-plugin` plugin might look like this
 ```xml
 <!-- The WildFly plugin deploys your war to a local JBoss AS container -->
 <plugin>
@@ -78,6 +90,12 @@ rm src/test/java/org/wildfly/examples/BookStoreServiceIT.java
     <artifactId>wildfly-maven-plugin</artifactId>
     <version>${version.wildfly.maven.plugin}</version>
     <configuration>
+
+        <discover-provisioning-info>
+            <addOns>
+                <addOn>postgresql:default</addOn>
+            </addOns>
+        </discover-provisioning-info>
 
         <debug>true</debug>
         <debugPort>8787</debugPort>

@@ -226,6 +226,12 @@
                 <version>${version.wildfly.maven.plugin}</version>
                 <configuration>
 
+                    <discover-provisioning-info>
+                        <addOns>
+                            <addOn>postgresql:default</addOn>
+                        </addOns>
+                    </discover-provisioning-info>
+
                     <debug>true</debug>
                     <debugPort>8787</debugPort>
 
