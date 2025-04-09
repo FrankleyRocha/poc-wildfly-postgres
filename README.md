@@ -119,3 +119,20 @@ rm src/test/java/org/wildfly/examples/BookStoreServiceIT.java
     </executions>
 </plugin>
 ```
+
+7) Create the following `persistence.xml` file in the src/main/resources/META-INF directory:
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+    <persistence-unit name="bookstore-PU">
+        <properties>
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+        </properties>
+    </persistence-unit>
+</persistence>
+```
+
+* We don’t need to specify the name of the Datasource by using `<jta-data-source>`. In absence of this property, Jakarta Persistence will use the default datasource configured in the server.
