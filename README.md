@@ -21,8 +21,8 @@ docker run --rm --name bookstore \
 mvn archetype:generate \
     -DarchetypeGroupId=org.wildfly.archetype \
     -DarchetypeArtifactId=wildfly-getting-started-archetype \
-    -DdefaultClassPrefix=BookStore \
-    -DartifactId=bookstore \
+    -DdefaultClassPrefix=BookStorex \
+    -DartifactId=bookstorex \
     -Dversion=1.0.0 \
     -DinteractiveMode=false
 ```
@@ -30,8 +30,6 @@ mvn archetype:generate \
 3) Remove the following files from the base project since we are not going to use them
 ```bash
 cd bookstore
-rm src/main/java/org/wildfly/examples/BookStoreService.java
-rm src/main/java/org/wildfly/examples/BookStoreEndpoint.java
 rm src/test/java/org/wildfly/examples/BookStoreApplicationIT.java
 rm src/test/java/org/wildfly/examples/BookStoreServiceIT.java
 ```
