@@ -60,3 +60,44 @@ rm src/test/java/org/wildfly/examples/BookStoreServiceIT.java
             <scope>provided</scope>
         </dependency> -->
 ```
+
+5) Add debug capability for mvn wildfly:dev
+
+* debug to configuration section in `wildfly-maven-plugin` plugin
+
+```xml
+<debug>true</debug>
+<debugPort>8787</debugPort>
+```
+
+* its will be like this
+```xml
+<!-- The WildFly plugin deploys your war to a local JBoss AS container -->
+<plugin>
+    <groupId>org.wildfly.plugins</groupId>
+    <artifactId>wildfly-maven-plugin</artifactId>
+    <version>${version.wildfly.maven.plugin}</version>
+    <configuration>
+
+        <debug>true</debug>
+        <debugPort>8787</debugPort>
+
+        <feature-packs>
+            <feature-pack>
+                <location>org.wildfly:wildfly-galleon-pack:${version.wildfly.bom}</location>
+            </feature-pack>
+        </feature-packs>
+        <layers>
+            <!-- layers may be used to customize the server to provision-->
+            <layer>cloud-server</layer>
+        </layers>
+    </configuration>
+    <executions>
+        <execution>
+            <goals>
+                <goal>package</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
