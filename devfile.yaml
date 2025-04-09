@@ -1,27 +1,21 @@
+schemaVersion: 2.3.0
+metadata:
+  name: devfile
+  displayName: Java with PostgreSQL Dev Environment
+  description: A development environment for a Java project with PostgreSQL database support.
+  language: Java
+  projectType: Java Application
+  version: 1.0.0
+  provider: Eclipse Che
+  tags:
+    - java
+    - postgres
+    - maven
+    - database
 components:
-  - name: maven-artifacts
-    volume:
-      size: 1Gi
-  - name: postgres
-    container:
-      image:   docker.io/library/postgres
-      memoryLimit: 1Gi
-      env:
-        - name: POSTGRES_DB
-          value: bookstore_db
-        - name: POSTGRES_USER
-          value: postgres
-        - name: POSTGRES_PASSWORD
-          value: admin
-      endpoints:
-        - exposure: internal
-          name: postgres
-          protocol: tcp
-          targetPort: 5432
   - name: tools
     container:
-      image: quay.io/devfile/universal-developer-image:ubi9-latest
-      memoryLimit: 2Gi
+      image: quay.io/devfile/universal-developer-image:latest
       env:
         - name: POSTGRESQL_DATABASE
           value: bookstore_db
@@ -37,6 +31,20 @@ components:
       volumeMounts:
         - name: maven-artifacts
           path: /home/user/.m2
-metadata:
-  name: poc-wildfly-postgres
-schemaVersion: 2.2.0
+      cpuLimit: 2
+      memoryLimit: 4Gi
+  - name: postgres
+    container:
+      image: postgres:latest
+      env:
+        - name: POSTGRES_DB
+          value: bookstore_db
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: admin
+      cpuLimit: 1
+      memoryLimit: 2Gi
+  - name: maven-artifacts
+    volume:
+      size: 2Gi
