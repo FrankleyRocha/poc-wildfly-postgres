@@ -137,19 +137,27 @@
 
     <dependencies>
 
-        <!-- Import the CDI API, we use provided scope as the API is included in WildFly -->
+        <!-- https://mvnrepository.com/artifact/jakarta.platform/jakarta.jakartaee-api -->
         <dependency>
-            <groupId>jakarta.enterprise</groupId>
-            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>10.0.0</version>
             <scope>provided</scope>
         </dependency>
 
+        <!-- Import the CDI API, we use provided scope as the API is included in WildFly -->
+        <!-- <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency> -->
+
         <!-- Import the JAX-RS API, we use provided scope as the API is included in WildFly -->
-        <dependency>
+        <!-- <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
             <scope>provided</scope>
-        </dependency>
+        </dependency> -->
 
         <!-- Test scope dependencies -->
         <dependency>
