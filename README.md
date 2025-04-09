@@ -151,3 +151,15 @@ import jakarta.ws.rs.core.Application;
 public class BookStoreApplication extends Application {
 }
 ```
+
+9) Add Lombok to `dependencies` section of `pom.xml`
+
+```xml
+<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.38</version>
+    <scope>provided</scope>
+</dependency>
+```
