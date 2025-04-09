@@ -136,3 +136,18 @@ rm src/test/java/org/wildfly/examples/BookStoreServiceIT.java
 ```
 
 * We don’t need to specify the name of the Datasource by using `<jta-data-source>`. In absence of this property, Jakarta Persistence will use the default datasource configured in the server.
+
+8) The BookStoreApplication class acts as a configuration class for the Jakarta REST application. It essentially tells the WildFly runtime that this is a Jakarta REST application and provides the base path for the application’s RESTful web services.
+
+* Modify it as follows to specify /api as the base URL for our Jakarta REST Web Service:
+
+```java
+package org.wildfly.examples;
+
+import jakarta.ws.rs.ApplicationPath;
+import jakarta.ws.rs.core.Application;
+
+@ApplicationPath("/api")
+public class BookStoreApplication extends Application {
+}
+```
