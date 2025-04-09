@@ -4,7 +4,7 @@ A wildfly postgres example with maven plugin
 
 Based and adpted from: https://www.wildfly.org/guides/database-integrating-with-postgresql
 
-1) Start database with docker/podman
+## 1) Start database with docker/podman
 * You can create a `startdb.sh` script if you want
 
 ```bash
@@ -16,7 +16,7 @@ docker run --rm --name bookstore \
   docker.io/library/postgres
 ```
 
-2) Create a bookstore project from archetype `wildfly-getting-started-archetype`
+## 2) Create a bookstore project from archetype `wildfly-getting-started-archetype`
 ```bash
 mvn archetype:generate \
     -DarchetypeGroupId=org.wildfly.archetype \
@@ -27,14 +27,14 @@ mvn archetype:generate \
     -DinteractiveMode=false
 ```
 
-3) Remove the following files from the base project since we are not going to use them
+## 3) Remove the following files from the base project since we are not going to use them
 ```bash
 cd bookstore
 rm src/test/java/org/wildfly/examples/BookStoreApplicationIT.java
 rm src/test/java/org/wildfly/examples/BookStoreServiceIT.java
 ```
 
-4) Update your pom.xml, add `jakarta.jakartaee-api` and comments `jakarta.enterprise.cdi-api` and `jakarta.ws.rs-api`
+## 4) Update your pom.xml, add `jakarta.jakartaee-api` and comments `jakarta.enterprise.cdi-api` and `jakarta.ws.rs-api`
 ```xml
     <dependencies>
 
@@ -61,7 +61,7 @@ rm src/test/java/org/wildfly/examples/BookStoreServiceIT.java
         </dependency> -->
 ```
 
-5) Add debug capability for mvn wildfly:dev
+## 5) Add debug capability for mvn wildfly:dev
 
 * debug to configuration section in `wildfly-maven-plugin` plugin
 
@@ -70,7 +70,7 @@ rm src/test/java/org/wildfly/examples/BookStoreServiceIT.java
 <debugPort>8787</debugPort>
 ```
 
-6) Instruct Wildfly Glow to discover automatically the required Galleon Layers for our application
+## 6) Instruct Wildfly Glow to discover automatically the required Galleon Layers for our application
 
 * The discover-provisioning-info configuration tells the plugin to discover the required layers by inspecting our application code. By using the postgresql:default addon, we are specifying we want to use a PostgreSQL database, and we want to configure it as the default datasource for the server.
 
@@ -120,7 +120,7 @@ rm src/test/java/org/wildfly/examples/BookStoreServiceIT.java
 </plugin>
 ```
 
-7) Create the following `persistence.xml` file in the src/main/resources/META-INF directory:
+## 7) Create the following `persistence.xml` file in the src/main/resources/META-INF directory:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -137,7 +137,7 @@ rm src/test/java/org/wildfly/examples/BookStoreServiceIT.java
 
 * We don’t need to specify the name of the Datasource by using `<jta-data-source>`. In absence of this property, Jakarta Persistence will use the default datasource configured in the server.
 
-8) The BookStoreApplication class acts as a configuration class for the Jakarta REST application. It essentially tells the WildFly runtime that this is a Jakarta REST application and provides the base path for the application’s RESTful web services.
+## 8) The BookStoreApplication class acts as a configuration class for the Jakarta REST application. It essentially tells the WildFly runtime that this is a Jakarta REST application and provides the base path for the application’s RESTful web services.
 
 * Modify it as follows to specify /api as the base URL for our Jakarta REST Web Service:
 
@@ -152,7 +152,7 @@ public class BookStoreApplication extends Application {
 }
 ```
 
-9) Add Lombok to `dependencies` section of `pom.xml`
+## 9) Add Lombok to `dependencies` section of `pom.xml`
 
 ```xml
 <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
@@ -162,4 +162,50 @@ public class BookStoreApplication extends Application {
     <version>1.18.38</version>
     <scope>provided</scope>
 </dependency>
+```
+
+## 10) Book Entity
+The Book entity represents a book record in the database.
+
+* Create a new class Book in the src/main/java/org/wildfly/examples directory with the following content:
+
+```java
+package org.wildfly.examples;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
+import lombok.Data;
+
+@Entity
+@Table(name = "books")
+@Data
+public class Book {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private Long id;
+
+    @NotBlank
+    @Column(nullable = false)
+    private String title;
+
+    @NotBlank
+    @Column(nullable = false)
+    private String author;
+
+    @NotBlank
+    @Column(nullable = false)
+    private String isbn;
+
+    @PositiveOrZero
+    @Column
+    private double price;
+
+}
 ```
