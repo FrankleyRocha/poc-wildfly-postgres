@@ -36,7 +36,7 @@ components:
 
   - name: postgres
     container:
-      image: "registry.redhat.io/rhel9/postgresql-16:latest"
+      image: "postgres"
       memoryLimit: "256M"
       env:
         - name: POSTGRESQL_DATABASE
