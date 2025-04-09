@@ -31,7 +31,7 @@ components:
       volumeMounts:
         - name: maven-artifacts
           path: /home/user/.m2
-      cpuLimit: 2
+      cpuLimit: "2"
       memoryLimit: 4Gi
   - name: postgres
     container:
@@ -43,7 +43,7 @@ components:
           value: postgres
         - name: POSTGRES_PASSWORD
           value: admin
-      cpuLimit: 1
+      cpuLimit: "1"
       memoryLimit: 2Gi
   - name: maven-artifacts
     volume:
